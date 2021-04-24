@@ -22,11 +22,17 @@ pub trait UniqueAssets<AccountId> {
     /// The total number of this type of asset that has been burned (may overflow).
     fn burned() -> u128;
     /// The total number of this type of asset owned by an account.
-    fn total_for_account(account: &AccountId) -> u64;
+    fn total_for_account(account: &AccountId) -> u64{
+
+    }
     /// The set of unique assets owned by an account.
-    fn assets_for_account(account: &AccountId) -> Vec<(Self::AssetId, Self::AssetInfo)>;
+    fn assets_for_account(account: &AccountId) -> Vec<(Self::AssetId, Self::AssetInfo){
+
+    }
     /// The ID of the account that owns an asset.
-    fn owner_of(asset_id: &Self::AssetId) -> AccountId;
+    fn owner_of(asset_id: &Self::AssetId) -> AccountId{
+        
+    }
 
     /// Use the provided asset info to create a new unique asset for the specified user.
     /// This method **must** return an error in the following cases:
@@ -34,7 +40,6 @@ pub trait UniqueAssets<AccountId> {
     /// - The specified owner account has already reached the user asset limit.
     /// - The total asset limit has already been reached.
     fn mint(owner_account: &AccountId,asset_info: Self::AssetInfo,) -> Result<Self::AssetId, DispatchError>{
-        
 
     }
     /// Destroy an asset.
