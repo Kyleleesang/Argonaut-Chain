@@ -1,6 +1,6 @@
-# Substrate Node Template
+# Argonaut Chain
 
-A new FRAME-based Substrate node, ready for hacking :rocket:
+Argonaut Chain is a hybrid PoW and PoS chain integrated with IPFS to solve the blockchain scalability and bloat problem :rocket:
 
 ## Getting Started
 
