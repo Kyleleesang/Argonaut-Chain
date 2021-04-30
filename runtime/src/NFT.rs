@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! # ERC721
+//! # NFT
 //!
-//! This is an ERC721 Token implementation.
+//! This is an NFT Token implementation.
 //!
 //! ## Warning
 //!
@@ -67,7 +67,7 @@
 use ink_lang as ink;
 
 #[ink::contract]
-mod erc721 {
+mod NFT {
     #[cfg(not(feature = "ink-as-dependency"))]
     use ink_storage::collections::{
         hashmap::Entry,
@@ -83,7 +83,7 @@ mod erc721 {
 
     #[ink(storage)]
     #[derive(Default)]
-    pub struct Erc721 {
+    pub struct NFT {
         /// Mapping from token to owner.
         token_owner: StorageHashMap<TokenId, AccountId>,
         /// Mapping from token to approvals users.
@@ -140,8 +140,8 @@ mod erc721 {
         approved: bool,
     }
 
-    impl Erc721 {
-        /// Creates a new ERC721 token contract.
+    impl NFT {
+        /// Creates a new NFT token contract.
         #[ink(constructor)]
         pub fn new() -> Self {
             Self {
@@ -452,15 +452,15 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Token 1 does not exists.
-            assert_eq!(erc721.owner_of(1), None);
+            assert_eq!(NFT.owner_of(1), None);
             // Alice does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.alice), 0);
+            assert_eq!(NFT.balance_of(accounts.alice), 0);
             // Create token Id 1.
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // Alice owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
         }
 
         #[ink::test]
@@ -469,18 +469,18 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Create token Id 1.
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // The first Transfer event takes place
             assert_eq!(1, ink_env::test::recorded_events().count());
             // Alice owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
             // Alice owns token Id 1.
-            assert_eq!(erc721.owner_of(1), Some(accounts.alice));
+            assert_eq!(NFT.owner_of(1), Some(accounts.alice));
             // Cannot create  token Id if it exists.
             // Bob cannot own token Id 1.
-            assert_eq!(erc721.mint(1), Err(Error::TokenExists));
+            assert_eq!(NFT.mint(1), Err(Error::TokenExists));
         }
 
         #[ink::test]
@@ -489,21 +489,21 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Create token Id 1 for Alice
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // Alice owns token 1
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
             // Bob does not owns any token
-            assert_eq!(erc721.balance_of(accounts.bob), 0);
+            assert_eq!(NFT.balance_of(accounts.bob), 0);
             // The first Transfer event takes place
             assert_eq!(1, ink_env::test::recorded_events().count());
             // Alice transfers token 1 to Bob
-            assert_eq!(erc721.transfer(accounts.bob, 1), Ok(()));
+            assert_eq!(NFT.transfer(accounts.bob, 1), Ok(()));
             // The second Transfer event takes place
             assert_eq!(2, ink_env::test::recorded_events().count());
             // Bob owns token 1
-            assert_eq!(erc721.balance_of(accounts.bob), 1);
+            assert_eq!(NFT.balance_of(accounts.bob), 1);
         }
 
         #[ink::test]
@@ -512,17 +512,17 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Transfer token fails if it does not exists.
-            assert_eq!(erc721.transfer(accounts.bob, 2), Err(Error::TokenNotFound));
+            assert_eq!(NFT.transfer(accounts.bob, 2), Err(Error::TokenNotFound));
             // Token Id 2 does not exists.
-            assert_eq!(erc721.owner_of(2), None);
+            assert_eq!(NFT.owner_of(2), None);
             // Create token Id 2.
-            assert_eq!(erc721.mint(2), Ok(()));
+            assert_eq!(NFT.mint(2), Ok(()));
             // Alice owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
             // Token Id 2 is owned by Alice.
-            assert_eq!(erc721.owner_of(2), Some(accounts.alice));
+            assert_eq!(NFT.owner_of(2), Some(accounts.alice));
             // Get contract address
             let callee = ink_env::account_id::<ink_env::DefaultEnvironment>()
                 .unwrap_or([0x0; 32].into());
@@ -539,7 +539,7 @@ mod erc721 {
                 data,
             );
             // Bob cannot transfer not owned tokens.
-            assert_eq!(erc721.transfer(accounts.eve, 2), Err(Error::NotApproved));
+            assert_eq!(NFT.transfer(accounts.eve, 2), Err(Error::NotApproved));
         }
 
         #[ink::test]
@@ -548,13 +548,13 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Create token Id 1.
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // Token Id 1 is owned by Alice.
-            assert_eq!(erc721.owner_of(1), Some(accounts.alice));
+            assert_eq!(NFT.owner_of(1), Some(accounts.alice));
             // Approve token Id 1 transfer for Bob on behalf of Alice.
-            assert_eq!(erc721.approve(accounts.bob, 1), Ok(()));
+            assert_eq!(NFT.approve(accounts.bob, 1), Ok(()));
             // Get contract address.
             let callee = ink_env::account_id::<ink_env::DefaultEnvironment>()
                 .unwrap_or([0x0; 32].into());
@@ -572,17 +572,17 @@ mod erc721 {
             );
             // Bob transfers token Id 1 from Alice to Eve.
             assert_eq!(
-                erc721.transfer_from(accounts.alice, accounts.eve, 1),
+                NFT.transfer_from(accounts.alice, accounts.eve, 1),
                 Ok(())
             );
             // TokenId 3 is owned by Eve.
-            assert_eq!(erc721.owner_of(1), Some(accounts.eve));
+            assert_eq!(NFT.owner_of(1), Some(accounts.eve));
             // Alice does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.alice), 0);
+            assert_eq!(NFT.balance_of(accounts.alice), 0);
             // Bob does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.bob), 0);
+            assert_eq!(NFT.balance_of(accounts.bob), 0);
             // Eve owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.eve), 1);
+            assert_eq!(NFT.balance_of(accounts.eve), 1);
         }
 
         #[ink::test]
@@ -591,18 +591,18 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Create token Id 1.
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // Create token Id 2.
-            assert_eq!(erc721.mint(2), Ok(()));
+            assert_eq!(NFT.mint(2), Ok(()));
             // Alice owns 2 tokens.
-            assert_eq!(erc721.balance_of(accounts.alice), 2);
+            assert_eq!(NFT.balance_of(accounts.alice), 2);
             // Approve token Id 1 transfer for Bob on behalf of Alice.
-            assert_eq!(erc721.set_approval_for_all(accounts.bob, true), Ok(()));
+            assert_eq!(NFT.set_approval_for_all(accounts.bob, true), Ok(()));
             // Bob is an approved operator for Alice
             assert_eq!(
-                erc721.is_approved_for_all(accounts.alice, accounts.bob),
+                NFT.is_approved_for_all(accounts.alice, accounts.bob),
                 true
             );
             // Get contract address.
@@ -622,29 +622,29 @@ mod erc721 {
             );
             // Bob transfers token Id 1 from Alice to Eve.
             assert_eq!(
-                erc721.transfer_from(accounts.alice, accounts.eve, 1),
+                NFT.transfer_from(accounts.alice, accounts.eve, 1),
                 Ok(())
             );
             // TokenId 1 is owned by Eve.
-            assert_eq!(erc721.owner_of(1), Some(accounts.eve));
+            assert_eq!(NFT.owner_of(1), Some(accounts.eve));
             // Alice owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
             // Bob transfers token Id 2 from Alice to Eve.
             assert_eq!(
-                erc721.transfer_from(accounts.alice, accounts.eve, 2),
+                NFT.transfer_from(accounts.alice, accounts.eve, 2),
                 Ok(())
             );
             // Bob does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.bob), 0);
+            assert_eq!(NFT.balance_of(accounts.bob), 0);
             // Eve owns 2 tokens.
-            assert_eq!(erc721.balance_of(accounts.eve), 2);
+            assert_eq!(NFT.balance_of(accounts.eve), 2);
             // Get back to the parent execution context.
             ink_env::test::pop_execution_context();
             // Remove operator approval for Bob on behalf of Alice.
-            assert_eq!(erc721.set_approval_for_all(accounts.bob, false), Ok(()));
+            assert_eq!(NFT.set_approval_for_all(accounts.bob, false), Ok(()));
             // Bob is not an approved operator for Alice.
             assert_eq!(
-                erc721.is_approved_for_all(accounts.alice, accounts.bob),
+                NFT.is_approved_for_all(accounts.alice, accounts.bob),
                 false
             );
         }
@@ -655,15 +655,15 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Create token Id 1.
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // Alice owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
             // Bob does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.bob), 0);
+            assert_eq!(NFT.balance_of(accounts.bob), 0);
             // Eve does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.eve), 0);
+            assert_eq!(NFT.balance_of(accounts.eve), 0);
             // Get contract address.
             let callee = ink_env::account_id::<ink_env::DefaultEnvironment>()
                 .unwrap_or([0x0; 32].into());
@@ -681,15 +681,15 @@ mod erc721 {
             );
             // Eve is not an approved operator by Alice.
             assert_eq!(
-                erc721.transfer_from(accounts.alice, accounts.frank, 1),
+                NFT.transfer_from(accounts.alice, accounts.frank, 1),
                 Err(Error::NotApproved)
             );
             // Alice owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
             // Bob does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.bob), 0);
+            assert_eq!(NFT.balance_of(accounts.bob), 0);
             // Eve does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.eve), 0);
+            assert_eq!(NFT.balance_of(accounts.eve), 0);
         }
 
         #[ink::test]
@@ -698,27 +698,27 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Create token Id 1 for Alice
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // Alice owns 1 token.
-            assert_eq!(erc721.balance_of(accounts.alice), 1);
+            assert_eq!(NFT.balance_of(accounts.alice), 1);
             // Alice owns token Id 1.
-            assert_eq!(erc721.owner_of(1), Some(accounts.alice));
+            assert_eq!(NFT.owner_of(1), Some(accounts.alice));
             // Destroy token Id 1.
-            assert_eq!(erc721.burn(1), Ok(()));
+            assert_eq!(NFT.burn(1), Ok(()));
             // Alice does not owns tokens.
-            assert_eq!(erc721.balance_of(accounts.alice), 0);
+            assert_eq!(NFT.balance_of(accounts.alice), 0);
             // Token Id 1 does not exists
-            assert_eq!(erc721.owner_of(1), None);
+            assert_eq!(NFT.owner_of(1), None);
         }
 
         #[ink::test]
         fn burn_fails_token_not_found() {
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Try burning a non existent token
-            assert_eq!(erc721.burn(1), Err(Error::TokenNotFound));
+            assert_eq!(NFT.burn(1), Err(Error::TokenNotFound));
         }
 
         #[ink::test]
@@ -727,12 +727,12 @@ mod erc721 {
                 ink_env::test::default_accounts::<ink_env::DefaultEnvironment>()
                     .expect("Cannot get accounts");
             // Create a new contract instance.
-            let mut erc721 = Erc721::new();
+            let mut NFT = NFT::new();
             // Create token Id 1 for Alice
-            assert_eq!(erc721.mint(1), Ok(()));
+            assert_eq!(NFT.mint(1), Ok(()));
             // Try burning this token with a different account
             set_sender(accounts.eve);
-            assert_eq!(erc721.burn(1), Err(Error::NotOwner));
+            assert_eq!(NFT.burn(1), Err(Error::NotOwner));
         }
 
         fn set_sender(sender: AccountId) {
