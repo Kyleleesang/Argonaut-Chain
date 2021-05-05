@@ -1,10 +1,23 @@
 # Argonaut Chain
 
 Argonaut Chain is a hybrid PoW and PoS chain integrated with IPFS to solve the blockchain scalability and bloat problem 
+
+
+
+
 -Multi Blockchain Post Quantum signatures for the signature scheme
+We plan to use the MBPQS algorithm to generate a chain of one time quantum resistant signatures from the public and private key pair in order to give us quantum secure signatures as in the Blockchained Post Quantum Signatures paper written by the R3 blockchain firm. Blake256 is chosen over SHA256 because of its significantlly improved cycles to bytes performance.
+
+
 -Polyshard for scalability
+
+
 -SeF secure fountain codes for 1000x storage savings
+We plan to use the secure fountain code implementation to encode blocks of the Blockchain state into droplet nodes to reduce the bootstrap cost of a full node and reduce the chain size exponentially in order to provide increased security and decentralization, in test of the Bitcoin blockchain over a 90% reduction in the Blockchain size from over 190GB to 191GB
+
+
 -IPFS for offchain multimedia content
+IPFS will be used to host websites and other multimedia content offchain in order to reduce the bloat, while storing the releveant Content ID's and hashes into the Blockchain itself. Staking rewards will be distributed to droplet nodes which host IPFS content submitted to the main chain
 
 ## Getting Started
 
