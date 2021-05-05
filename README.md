@@ -1,6 +1,6 @@
 # Argonaut Chain
 
-Argonaut Chain is a hybrid PoW and PoS chain integrated with IPFS to solve the blockchain scalability and bloat problem 
+Argonaut Chain is a hybrid PoW and PoS chain build in rust on the substrate framework to solve the blockchain trilemma. Argonaut Chain is incorporating the MBPQS signature scheme for long term quantum security and the blake256 hashing algorithm for more efficient mining. We plan to integrate hte Polyshard protocol for network sharding and scalability, Fountain codes for blockchain bootstrap cost and size reduction along with Integrated with IPFS to solve the blockchain  bloat problem 
 
 
 
