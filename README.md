@@ -10,6 +10,7 @@ We plan to use the MBPQS algorithm to generate a chain of one time quantum resis
 
 
 -Polyshard for scalability
+The polyshard protocol will be implemented for sharding resistance up 50% adversarial power. Transaction speed should grow linearly as more nodes join the network and contribute to the overall security of the chain
 
 
 -SeF secure fountain codes for 1000x storage savings
