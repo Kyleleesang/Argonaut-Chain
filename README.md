@@ -17,7 +17,7 @@ The polyshard protocol will be implemented for sharding resistance up 50% advers
 
 [SeF secure fountain codes for 1000x storage savings](https://arxiv.org/pdf/1906.12140.pdf)
 
-We plan to use the secure fountain code implementation to encode blocks of the Blockchain state into droplet nodes to reduce the bootstrap cost of a full node and reduce the chain size exponentially in order to provide increased security and decentralization, in test of the Bitcoin blockchain over a 90% reduction in the Blockchain size from over 190GB to 191GB
+We plan to use the secure fountain code implementation to encode blocks of the Blockchain state into droplet nodes to reduce the bootstrap cost of a full node and reduce the chain size exponentially in order to provide increased security and decentralization, in test of the Bitcoin blockchain over a 90% reduction in the Blockchain size from over 190GB to 191MB
 
 
 [IPFS for offchain multimedia content](https://docs.ipfs.io/concepts)
