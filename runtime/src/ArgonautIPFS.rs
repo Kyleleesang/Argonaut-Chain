@@ -71,6 +71,11 @@ decl_event!(
     }
 );
 
+decl_storage! {
+    // put a storage map of all the ipfs hashes where they can be found
+    Hashes: map Vec<u8> => (T::AccountID, T::BlockNumber);
+}
+
 
 // The pallet's dispatchable functions.
 decl_module! {
