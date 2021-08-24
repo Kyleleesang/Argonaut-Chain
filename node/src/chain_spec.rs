@@ -74,13 +74,9 @@ pub fn development_config() -> Result<ChainSpec, String> {
 		"Development",
 		// ID
 		"dev",
-		ChainType::Development,
-		move || testnet_genesis(
-			wasm_binary,
+		ChainType::Development, move || testnet_genesis(wasm_binary,
 			// Initial PoA authorities
-			vec![
-				authority_keys_from_seed("Alice"),
-			],
+			vec![authority_keys_from_seed("Alice"),],
 			// Sudo account
 			get_account_id_from_seed::<sr25519::Public>("Alice"),
 			// Pre-funded accounts
@@ -153,10 +149,7 @@ pub fn local_testnet_config() -> Result<ChainSpec, String> {
 	))
 }
 
-fn session_keys(
-	aura: AuraId,
-	grandpa: GrandpaId,
-) -> SessionKeys {
+fn session_keys(aura: AuraId,grandpa: GrandpaId,) -> SessionKeys {
 	SessionKeys { aura, grandpa }
 }
 

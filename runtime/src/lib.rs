@@ -132,8 +132,8 @@ pub mod opaque {
 }
 
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("node-template"),
-	impl_name: create_runtime_str!("node-template"),
+	spec_name: create_runtime_str!("Argonaut"),
+	impl_name: create_runtime_str!("Argonaut"),
 	authoring_version: 1,
 	spec_version: 1,
 	impl_version: 1,
@@ -141,10 +141,11 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	transaction_version: 1,
 };
 
+//converting BlockNumber into time so you can use these variables such as minutes instead of
+//having to calculate the block number for whatever timeyou want
 pub const MILLISECS_PER_BLOCK: u64 = 6000;
 
 pub const SLOT_DURATION: u64 = MILLISECS_PER_BLOCK;
-
 // Time is measured by number of blocks.
 pub const MINUTES: BlockNumber = 60_000 / (MILLISECS_PER_BLOCK as BlockNumber);
 pub const HOURS: BlockNumber = MINUTES * 60;
