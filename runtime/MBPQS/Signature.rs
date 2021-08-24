@@ -5,15 +5,15 @@ pub SignatureSequenceNumber: u32;
 pub struct RootSignature {
     context: &Context; // Context of the MBPQS instance
     SequenceNumber: SignatureSequenceNumber;
-    WOTSsig: byte_array::ByteArray; //WOTS signature of the channel root
-    AuthoritzationPath: byte_array::ByteArray // The authentication path for this signature to the rootTree root node.
-    RootHash: byte_array::ByteArray // ChannelRoot which is signed.
+    WOTSsig: Vec<u8> //WOTS signature of the channel root
+    AuthoritzationPath: Vec<u8> // The authentication path for this signature to the rootTree root node.
+    RootHash: Vec<u8> // ChannelRoot which is signed.
 }
 //Signature of the last OTS key in a chain tree over the next chain tree root node
 pub struct GrowSignature {
     context: &Context; // Context of the MBPQS instance
-    WOTSsig: byte_array::ByteArray; //WOTS signature of the channel root
-    RootHash: byte_array::ByteArray;
+    WOTSsig: Vec<u8>; //WOTS signature of the channel root
+    RootHash: Vec<u8>
     chainSequenceNumber: uint32;
     ChannelID: uint32;
     layer: uint32;
@@ -23,9 +23,9 @@ pub struct GrowSignature {
 pub struct MessageSignature {
     context: &Context; // Context of the MBPQS instance
     SequenceNumber: SignatureSequenceNumber;
-    DigestValue: byte_array::ByteArray; // Randomized value from a digest
-    WOTSsig: byte_array::ByteArray; //WOTS signature of the channel root
-    AuthoritzationPath: byte_array::ByteArray // The authentication path for this signature to the rootTree root node.
+    DigestValue: Vec<u8>; // Randomized value from a digest
+    WOTSsig: Vec<u8>; //WOTS signature of the channel root
+    AuthoritzationPath: Vec<u8> // The authentication path for this signature to the rootTree root node.
     chainSequenceNumber: uint32;
     ChannelID: uint32;
     layer:uint32;
@@ -35,13 +35,13 @@ impl RootSignature{
     fn GetSignedRoot(Root: &RootSignature) {
         return Root.RootHash;
     }
-    fn NextAuthNode(Root: &RootSignature, previousAuthNode: byte_array::ByteArray){
+    fn NextAuthNode(Root: &RootSignature, previousAuthNode: Vec<u8>){
         return Root.GetSignedRoot;
     }
 }
 
 impl MessageSignature{
-    fn NextAuthNode(Msg: &MessageSignature, previousAuthNode: byte_array::ByteArray){
+    fn NextAuthNode(Msg: &MessageSignature, previousAuthNode: Vec<u8>){
         if Msg.LastChainMessage{
             return previousAuthNode[0];
         } return Msg.AuthoritzationPath;
