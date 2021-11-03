@@ -27,10 +27,15 @@ IPFS will be used to host websites and other multimedia content offchain in orde
 
 # ToDo List (Ongoing)
 Implement orbitDB to have an IPFS based UTXO store
+
 Implement Zcoin style chainlocks to prevent against PoW attacks
+
 Implement ERC721 standard from substrate
+
 Implement custom Ink! smart contract Logic
+
 Implement MBPQS
+
 Implement Prism-Substrate Blocks
 ## Getting Started
 
