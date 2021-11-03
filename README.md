@@ -12,7 +12,7 @@ We plan to use the MBPQS algorithm to generate a chain of one time quantum resis
 
 [Prism for scalability](https://arxiv.org/pdf/1909.11261.pdf)
 
-The polyshard protocol will be implemented for sharding resistance up 50% adversarial power. Transaction speed should grow linearly as more nodes join the network and contribute to the overall security of the chain
+The prism protocol will be implemented for our consensus protocol enabling us to scale to 70k tps 
 
 
 [SeF secure fountain codes for 1000x storage savings](https://arxiv.org/pdf/1906.12140.pdf)
