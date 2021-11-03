@@ -24,6 +24,14 @@ We plan to use the secure fountain code implementation to encode blocks of the B
 
 IPFS will be used to host websites and other multimedia content offchain in order to reduce the bloat, while storing the releveant Content ID's and hashes into the Blockchain itself. Staking rewards will be distributed to droplet nodes which host IPFS content submitted to the main chain
 
+
+# ToDo List (Ongoing)
+Implement orbitDB to have an IPFS based UTXO store
+Implement Zcoin style chainlocks to prevent against PoW attacks
+Implement ERC721 standard from substrate
+Implement custom Ink! smart contract Logic
+Implement MBPQS
+Implement Prism-Substrate Blocks
 ## Getting Started
 
 This project contains some configuration files to help get started :hammer_and_wrench:
