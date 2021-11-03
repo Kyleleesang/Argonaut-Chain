@@ -1,6 +1,6 @@
 # Argonaut Chain
 
-Argonaut Chain is a hybrid PoW and PoS chain build in rust on the substrate framework to solve the blockchain trilemma. Argonaut Chain is incorporating the MBPQS signature scheme for long term quantum security and the blake256 hashing algorithm for more efficient mining. We plan to integrate hte Polyshard protocol for network sharding and scalability, Fountain codes for blockchain bootstrap cost and size reduction along with Integrated with IPFS to solve the blockchain  bloat problem 
+Argonaut Chain is a hybrid PoW and PoS chain build in rust on the substrate framework to solve the blockchain trilemma. Argonaut Chain is incorporating the MBPQS signature scheme for long term quantum security and the blake256 hashing algorithm for more efficient mining. The Prism consensus protocol will be implemented to ensure scalability up to 70,000 tps, Fountain codes for blockchain bootstrap cost and size reduction along with Integrated with IPFS to solve the blockchain  bloat problem 
 
 
 
@@ -10,7 +10,7 @@ Argonaut Chain is a hybrid PoW and PoS chain build in rust on the substrate fram
 We plan to use the MBPQS algorithm to generate a chain of one time quantum resistant signatures from the public and private key pair in order to give us quantum secure signatures as in the Blockchained Post Quantum Signatures paper written by the R3 blockchain firm. Blake256 is chosen over SHA256 because of its significantlly improved cycles to bytes performance.
 
 
-[Polyshard for scalability](https://arxiv.org/pdf/1809.10361.pdf)
+[Prism for scalability](https://arxiv.org/pdf/1909.11261.pdf)
 
 The polyshard protocol will be implemented for sharding resistance up 50% adversarial power. Transaction speed should grow linearly as more nodes join the network and contribute to the overall security of the chain
 
