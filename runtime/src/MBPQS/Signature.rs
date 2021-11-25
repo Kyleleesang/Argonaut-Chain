@@ -52,5 +52,9 @@ impl MessageSignature{
             return true;
         } return false;
     }
-
+}
+impl GrowSignature{
+    fn NextAuthNode(growth: GrowSignature, previousAuthNode: Vec<u8>) -> Vec<u8>{
+        return growth.RootHash
+    }
 }
