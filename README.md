@@ -7,6 +7,8 @@ Argonaut Chain is a hybrid PoW and PoS chain build in rust on the substrate fram
 
 [Multi Blockchain Post Quantum signatures](https://eprint.iacr.org/2018/658.pdf)
 
+We switched to Falcon512 for now
+
 We plan to use the MBPQS algorithm to generate a chain of one time quantum resistant signatures from the public and private key pair in order to give us quantum secure signatures as in the Blockchained Post Quantum Signatures paper written by the R3 blockchain firm. Blake256 is chosen over SHA256 because of its significantlly improved cycles to bytes performance.
 
 
