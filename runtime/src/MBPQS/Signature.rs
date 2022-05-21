@@ -1,6 +1,11 @@
 //Currently a WIP translating from GoLang to Rust
+pub mod Signature;
 
 pub SignatureSequenceNumber: u32;
+
+pub trait Signature{
+    NextAuthNode(previousAuthNode)
+}
 
 pub struct RootSignature {
     context: &Context; // Context of the MBPQS instance
