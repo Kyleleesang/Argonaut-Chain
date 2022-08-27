@@ -1,3 +1,0 @@
-the larger the w parameter is for WOTS+ signatures, the smaller the signatures but the larger the signing times
-with w set to 256, the signature sizes are around a kilobyte, have to submit a hash of the signature to the blockchain instead
-need to verify through the hash of the signature submitted to the chain

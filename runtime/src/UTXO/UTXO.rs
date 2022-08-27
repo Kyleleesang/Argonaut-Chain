@@ -5,39 +5,29 @@ use frame_support::{
 	ensure,};
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
-use sp_core::{
-	crypto::Public as _,
-	H256,
-	H512,
-	sr25519::{Public, Signature},
-};
+use sp_core::{crypto::Public as _, H256, H512, sr25519::{Public, Signature},};
 use sp_std::collections::btree_map::BTreeMap;
-use sp_runtime::{
-	traits::{BlakeTwo256, Hash, SaturatedConversion},
-	transaction_validity::{TransactionLongevity, ValidTransaction},
+use sp_runtime::{traits::{BlakeTwo256, Hash, SaturatedConversion},
+transaction_validity::{TransactionLongevity, ValidTransaction},
 };
 use super::{block_author::BlockAuthor, issuance::Issuance};
 
 pub trait Trait: frame_system::Trait {
 	/// The ubiquitous Event type
 	type Event: From<Event> + Into<<Self as frame_system::Trait>::Event>;
-
 	/// A source to determine the block author
 	type BlockAuthor: BlockAuthor;
-
 	/// A source to determine the issuance portion of the block reward
 	type Issuance: Issuance<<Self as frame_system::Trait>::BlockNumber, Value>;
 }
 
 pub type Value = u128;
-
 /// Single transaction to be dispatched
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
 #[derive(PartialEq, Eq, PartialOrd, Ord, Default, Clone, Encode, Decode, Hash, Debug)]
 pub struct Transaction {
 	/// UTXOs to be used as inputs for current transaction
 	pub inputs: Vec<TransactionInput>,
-
 	/// UTXOs to be created as a result of current transaction dispatch
 	pub outputs: Vec<TransactionOutput>,
 }
@@ -48,7 +38,6 @@ pub struct Transaction {
 pub struct TransactionInput {
 	/// Reference to an UTXO to be spent
 	pub outpoint: H256,
-
 	/// Proof that transaction owner is authorized to spend referred UTXO &
 	/// that the entire transaction is untampered
 	pub sigscript: H512,
@@ -60,7 +49,6 @@ pub struct TransactionInput {
 pub struct TransactionOutput {
 	/// Value associated with this output
 	pub value: Value,
-
 	/// Public key associated with this output. In order to spend this output
 	/// owner must provide a proof by hashing the whole `Transaction` and
 	/// signing it with a corresponding private key.
@@ -76,9 +64,7 @@ decl_storage! {
 		/// and use blake2_128_concat here. I'm deferring that so as not to break
 		/// the workshop inputs.
 		UtxoStore build(|config: &GenesisConfig| {
-			config.genesis_utxos
-				.iter()
-				.cloned()
+			config.genesis_utxos.iter().cloned()
 				.map(|u| (BlakeTwo256::hash_of(&u), u))
 				.collect::<Vec<_>>()
 		}): map hasher(identity) H256 => Option<TransactionOutput>;
@@ -243,7 +229,6 @@ impl<T: Trait> Module<T> {
 	/// Redistribute combined reward value to block Author
 	fn disperse_reward(author: &Public) {
 		let reward = RewardTotal::take() + T::Issuance::issuance(frame_system::Module::<T>::block_number());
-
 		let utxo = TransactionOutput {
 			value: reward,
 			pubkey: H256::from_slice(author.as_slice()),
